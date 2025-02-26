@@ -42,28 +42,37 @@ const DuelPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
             <div className="max-w-3xl w-full">
-                <h1 className="text-3xl font-bold text-center text-gray-900 mb-6 animate-fade-in-down">
+                {/* Title */}
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center text-gray-800 mb-6 animate-fade-in-down">
                     NBA Stats Duel
                 </h1>
-                <h2 className="text-xl font-semibold text-center text-blue-600 mb-8 animate-fade-in">
+
+                {/* Score Display */}
+                <h2 className="text-2xl font-semibold text-center text-orange-500 mb-8 animate-fade-in">
                     SCORE: {score}
                 </h2>
 
+                {/* Error Message */}
                 {error && (
-                    <p className="text-red-600 text-center mb-6 animate-fade-in">
+                    <p className="text-red-500 text-center mb-6 animate-fade-in">
                         {error}
                     </p>
                 )}
 
+                {/* Duel Cards */}
                 {duelData && (
                     <div className="bg-white shadow-xl rounded-lg p-6 animate-fade-in-up">
+                        {/* Stat Category */}
                         <h3 className="text-lg font-semibold text-gray-800 text-center mb-6">
-                            Stat to Compare: <span className="font-bold text-blue-600">{duelData.statCategory.toUpperCase()}</span>
+                            Stat to Compare:{" "}
+                            <span className="font-bold text-orange-500">{duelData.statCategory.toUpperCase()}</span>
                         </h3>
 
+                        {/* Player Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                            {/* Player 1 Card */}
                             <div className="bg-gray-50 p-4 rounded-md shadow-sm transition-all duration-300 hover:shadow-md">
                                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
                                     {duelData.player1.longName}
@@ -76,10 +85,12 @@ const DuelPage = () => {
                                 </p>
                             </div>
 
+                            {/* VS Text */}
                             <h2 className="text-2xl font-bold text-gray-500 text-center hidden md:block">
                                 VS
                             </h2>
 
+                            {/* Player 2 Card */}
                             <div className="bg-gray-50 p-4 rounded-md shadow-sm transition-all duration-300 hover:shadow-md">
                                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
                                     {duelData.player2.longName}
@@ -93,6 +104,7 @@ const DuelPage = () => {
                             </div>
                         </div>
 
+                        {/* Guess Buttons */}
                         <div className="mt-6 flex justify-center gap-4">
                             <button
                                 onClick={() => handleGuess("higher")}

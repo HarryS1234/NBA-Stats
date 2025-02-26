@@ -5,7 +5,7 @@ import HomePage from "./components/HomePage";
 import ComparisonPage from "./components/ComparisonPage";
 import DuelPage from "./components/DuelPage";
 import ProfilePage from "./components/ProfilePage";
-import LookUpPage from "./components/LookUpPage"; // Updated to match exact file name
+import LookupPage from "./components/LookUpPage";
 
 function App() {
   return (
@@ -13,10 +13,10 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/lookup" element={<LookUpPage />} /> {/* Updated to use LookUpPage */}
+        <Route path="/look-up" element={<LookupPage />} />
         <Route path="/comparison" element={<ComparisonPage />} />
         <Route path="/duel" element={<DuelPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/myprofile" element={<ProfilePage />} /> {/* Changed from /myprofile to /profile */}
       </Routes>
     </Router>
   );

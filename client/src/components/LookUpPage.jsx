@@ -4,17 +4,27 @@ const LookupPage = () => {
     const [playerName, setPlayerName] = useState("");
     const [playerDetails, setPlayerDetails] = useState(null);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // Added loading state
 
     const fetchPlayerDetails = async () => {
-        if (!playerName) return;
+        if (!playerName) {
+            setError("Please enter a player name.");
+            return;
+        }
+
+        setIsLoading(true); // Start loading
         setPlayerDetails(null);
         setError(null);
 
         try {
             const response = await fetch(`http://localhost:8000/playerlookup/${playerName}`);
-            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
+            const result = await response.json();
             console.log("Player Details Response:", result);
+
             if (result.error) {
                 setError(result.error);
             } else {
@@ -22,40 +32,46 @@ const LookupPage = () => {
             }
         } catch (error) {
             console.error("Error fetching player details:", error);
-            setError("Failed to fetch player data.");
+            setError("Failed to fetch player data. Please try again.");
+        } finally {
+            setIsLoading(false); // Stop loading
         }
     };
 
     return (
         <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl font-bold text-center text-gray-900 mb-8 animate-fade-in-down">
+                {/* Title */}
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center text-gray-800 mb-8 animate-fade-in-down">
                     NBA Player Look-up
                 </h1>
 
-                <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
+                {/* Search Bar and Button */}
+                <div className="bg-white shadow-lg rounded-lg p-6 mb-8 animate-fade-in-up">
                     <div className="flex flex-col sm:flex-row gap-4">
                         <input
                             type="text"
                             value={playerName}
                             onChange={(e) => setPlayerName(e.target.value)}
                             placeholder="Enter player name (e.g., LeBron James)"
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder:text-gray-400"
                         />
                         <button
                             onClick={fetchPlayerDetails}
-                            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
+                            disabled={isLoading} // Disable button while loading
+                            className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            Search
+                            {isLoading ? "Searching..." : "Search"}
                         </button>
                     </div>
                     {error && (
-                        <p className="mt-4 text-red-600 text-center animate-fade-in">
+                        <p className="mt-4 text-red-500 text-center animate-fade-in">
                             {error}
                         </p>
                     )}
                 </div>
 
+                {/* Player Details Section */}
                 {playerDetails && (
                     <div className="bg-white shadow-lg rounded-lg p-6 animate-fade-in-up">
                         <div className="flex flex-col md:flex-row gap-6">
@@ -63,11 +79,11 @@ const LookupPage = () => {
                                 <img
                                     src={playerDetails.nbaComHeadshot}
                                     alt="Player Headshot"
-                                    className="w-48 h-48 object-cover rounded-full shadow-md mx-auto md:mx-0"
+                                    className="w-48 h-48 object-cover rounded-full shadow-md mx-auto md:mx-0 border-2 border-orange-500"
                                 />
                             )}
                             <div className="flex-1">
-                                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                                     {playerDetails.longName}
                                 </h2>
                                 <p className="text-gray-700 mb-2">
@@ -87,8 +103,8 @@ const LookupPage = () => {
                                 </p>
 
                                 {playerDetails.stats && (
-                                    <div className="border-t pt-4">
-                                        <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                    <div className="border-t border-gray-200 pt-4">
+                                        <h2 className="text-xl font-semibold text-gray-800 mb-3">
                                             Player Statistics
                                         </h2>
                                         <p className="text-gray-700 mb-2">
