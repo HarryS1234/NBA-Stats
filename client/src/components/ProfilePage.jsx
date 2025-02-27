@@ -1,8 +1,10 @@
-import { useUser, UserButton, useClerk } from "@clerk/clerk-react";
+import { useUser, useClerk, UserProfile } from "@clerk/clerk-react";
+import { useState } from "react";
 
 const ProfilePage = () => {
   const { user } = useUser();
   const { signOut } = useClerk();
+  const [showUpload, setShowUpload] = useState(false);
 
   if (!user) {
     return (
@@ -24,9 +26,20 @@ const ProfilePage = () => {
               alt="Profile Avatar"
               className="w-32 h-32 rounded-full shadow-md mb-4 object-cover transition-all duration-300 hover:scale-105"
             />
-            
-            {/* Change Picture Button */}
-            <UserButton />
+
+            {/* Upload Button */}
+            <button
+              onClick={() => setShowUpload(!showUpload)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all mb-4"
+            >
+              {showUpload ? "Close Upload" : "Change Profile Picture"}
+            </button>
+
+            {showUpload && (
+              <div className="w-full flex justify-center">
+                <UserProfile path="/profile" routing="path" />
+              </div>
+            )}
 
             {/* Display Name */}
             <h2 className="text-2xl font-semibold text-gray-900 mb-2">
@@ -35,7 +48,8 @@ const ProfilePage = () => {
 
             {/* Email */}
             <p className="text-gray-700">
-              <span className="font-bold">Email:</span> {user?.primaryEmailAddress?.emailAddress}
+              <span className="font-bold">Email:</span>{" "}
+              {user?.primaryEmailAddress?.emailAddress}
             </p>
 
             {/* Logout Button */}
@@ -65,4 +79,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
