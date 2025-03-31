@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const duelScoreRoutes = require("./routes/duelscore");
 
 // Load environment variables
 dotenv.config();
@@ -24,6 +25,7 @@ const PORT = process.env.PORT || 8000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/duel", duelScoreRoutes);
 
 // Connect to MongoDB
 connectDB();
