@@ -10,11 +10,12 @@ import ProfilePage from "./components/ProfilePage";
 import LookupPage from "./components/LookUpPage";
 import LoginPage from "./components/LogInPage";
 import RegisterPage from "./components/RegisterPage";
-
+import Chatbot from "./components/ChatBot";
 function App() {
   return (
     <Router>
       <Navigation />
+      <Chatbot/>
       <AuthRedirect /> {/* Auto-redirects to login if not signed in */}
       <Routes>
         <Route path="/" element={<HomePage />} />
