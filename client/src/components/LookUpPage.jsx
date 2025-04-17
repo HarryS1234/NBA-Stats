@@ -17,7 +17,8 @@ const LookupPage = () => {
         setError(null);
 
         try {
-            const response = await fetch(`http://localhost:8000/api/playerstats/${encodeURIComponent(playerName)}`);
+            const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+            const response = await fetch(`${backendUrl}/api/playerstats/${encodeURIComponent(playerName)}`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

@@ -8,7 +8,8 @@ const ComparisonPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchPlayerStats = async (name) => {
-    const response = await fetch(`http://localhost:8000/api/playerstats/${name}`);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    const response = await fetch(`${backendUrl}/api/playerstats/${name}`);
     if (!response.ok) throw new Error(`Failed to fetch stats for ${name}`);
     return response.json();
   };

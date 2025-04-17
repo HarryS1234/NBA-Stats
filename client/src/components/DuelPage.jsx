@@ -10,7 +10,8 @@ const DuelPage = () => {
 
   const fetchNewDuel = async () => {
     try {
-      const response = await fetch("http://localhost:8000/duel");
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+      const response = await fetch(`${backendUrl}/duel`);
       const result = await response.json();
 
       if (result.message) {
@@ -25,7 +26,8 @@ const DuelPage = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await fetch("http://localhost:8000/duel/leaderboard");
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+      const response = await fetch(`${backendUrl}/duel/leaderboard`);
       const data = await response.json();
       setLeaderboard(data);
     } catch (error) {
@@ -42,7 +44,8 @@ const DuelPage = () => {
     if (!user) return;
 
     try {
-      await fetch("http://localhost:8000/duel/score", {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+      await fetch(`${backendUrl}/duel/score`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
