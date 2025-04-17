@@ -11,24 +11,32 @@ Currently, two official plugins are available:
 
 ## Deployment to Vercel
 
-### Setup
-1. Create a Vercel account and link it to your GitHub repository.
-2. Add the following environment variables in the Vercel dashboard:
-   - `VITE_BACKEND_URL`: The URL of your deployed server (e.g., https://nba-stats-server.vercel.app)
-   - Any other variables from your `.env` file
+### Deployment Workflow
+1. Deploy server first:
+   - Push your server code to GitHub
+   - Import the server repository in Vercel
+   - Complete the deployment and note the URL (e.g., https://nba-stats-server.vercel.app)
+
+2. Update client environment:
+   - Edit `.env.production` with your actual server URL:
+     ```
+     VITE_BACKEND_URL=https://your-deployed-server-url.vercel.app
+     ```
+
+3. Deploy client:
+   - Push your client code to GitHub
+   - Import the client repository in Vercel
+   - Configure the project settings
+   - Deploy!
 
 ### Environment Variables
 - Development: Uses `.env` with `VITE_BACKEND_URL=http://localhost:8000`
-- Production: Uses `.env.production` with `VITE_BACKEND_URL` pointing to your deployed server URL
+- Production: Uses `.env.production` with the URL of your deployed server
 
-### Deployment Steps
-1. Push your code to GitHub.
-2. In the Vercel dashboard, import your repository.
-3. Configure the project:
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-   - Install Command: `npm install`
-4. Deploy!
+### Project Configuration in Vercel
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Install Command: `npm install`
 
 ### Troubleshooting
 - If you encounter CORS errors, make sure your server URL is correctly set in the environment variables.

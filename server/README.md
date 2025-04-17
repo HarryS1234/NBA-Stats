@@ -2,21 +2,27 @@
 
 ## Deployment to Vercel
 
-### Setup
-1. Create a Vercel account and link it to your GitHub repository.
-2. Add the following environment variables in the Vercel dashboard:
-   - `MONGO_URI`: Your MongoDB connection string
-   - Any other variables from your `.env` file
+### Deployment Workflow
+1. Deploy server to Vercel:
+   - Push your code to GitHub
+   - Import the repository in Vercel
+   - Configure as shown below
+   - Deploy and note the URL (you'll need it for client deployment)
 
-### Deployment Steps
-1. Push your code to GitHub.
-2. In the Vercel dashboard, import your repository.
-3. Configure the project:
-   - Build Command: None (leave empty)
-   - Output Directory: None (leave empty)
-   - Install Command: `npm install`
-   - Root Directory: `server`
-4. Deploy!
+2. After deployment:
+   - Check that the server responds at your deployment URL
+   - Use this URL when configuring your client's `.env.production`
+
+### Environment Variables in Vercel
+Make sure to add these in the Vercel project settings:
+- `MONGO_URI`: Your MongoDB connection string
+- Any other variables from your `.env` file
+
+### Project Configuration in Vercel
+- Root Directory: `server` (if in a monorepo) or leave empty if server is in its own repo
+- Build Command: (leave empty)
+- Output Directory: (leave empty)
+- Install Command: `npm install`
 
 ### Troubleshooting
 - If you encounter database connection issues, verify your `MONGO_URI` in the Vercel environment variables.
